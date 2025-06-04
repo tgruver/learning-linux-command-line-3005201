@@ -1,60 +1,59 @@
 # Commands used in __Learning Linux Command Line__ from LinkedIn Learning
 
-## 01_01 - Creating a Linux virtual machine
-
-`sudo apt install gcc make perl`
-
-## 02_03 - Write commands in a shell at the prompt
-
-`ls`
-
-`ls -l`
-
-`ls`
-
-`list` (invalid command)
-
-`jhsdgjhksad` (invalid command)
+## Navigating command line
+           ctrl A --> move to beginning of line
+           ctrl E --> move to end of line
+           ctrl U --> delete from cursor to line start
+           ctrl K --> delete from cursor to line end
+           ctrl shift C --> copy 
+           ctrl shive V --> paste
+           ctrl C --> cancle command
+           ctrl R --> search command history of a command
 
 ## 02_04 - Finding help for commands
 
 `man ls`
-
+    returns manual of how to use command and options associated
+    
 `ls --help`
-
+  
 `apropos list`
-
+    looks up a command by its description rather than its name
+    
 ## 02_05 - Helpful keyboard shortcuts in the terminal
 
-`ls -l De` followed by the Tab key
-
 `ls -l Do` followed by the Tab key twice
-
+  returns list of items in directory with letters do in directory
+  
 `ls -l Doc` followed by the Tab key
+  returns document if only path that contains 'Doc' is document
+  
+Tab completion autocompletes your command based on the first letters of the command. --> 'user/docu' + tab  = user/documents
 
-`a` followed by the Tab key
 
+  
 `clear` (used throughout the course)
-
+    clears terminal window
 ## 03_01 - The Linux file system
 
-`ls -l`
+`ls -l` --> display list of every path in directory
 
-`file Documents`
+`file Documents` --> classifies a file (i.e what type? Directory, png, executable?)
 
-`stat Documents`
+`stat Documents` --> display file status 
 
 ## 03_03 - Navigating the file system
 
-`cd Documents/`
-
-`pwd`
+ for directories with titles with spaces, we can use escape the space to ensure the shell treats the word as a single argument 
+  --> Directory: home/tyler/documents/"exercise file" can be written as home/tyler/documents/exercise\file for convience
+  
+`pwd` --> Prints working directory
 
 `cd Exercise Files` (invalid command)
 
 `cd Exercise\ Files`
 
-`pwd`
+`pwd`--> prints absolute directory
 
 `ls`
 
@@ -62,129 +61,121 @@
 
 `cd departments/hr/policies`
 
-`cd ..`
+`..` refers to parent directory or working directory 
 
 `cd ..`
 
 `cd hr/policies`
 
 `cd ../../finance/documents`
+     --> leave top 2 directories, then go into finance directory and then into documents directory  
 
-`cd -`
+`cd -` can be used to switch between the two most recently used working directories
 
-`cd`
+`cd` returns back to home directory
 
 ## 03_04 - Exploring the output of the ls command
 
-`ls`
+`ls` returns content of a directory
 
-`ls --color=always`
-
-`cd Documents/Exercise\ Files`
+`ls --color=always` returns content of a directory to ensure different types of paths have different colors 
 
 `ls -l`
-
-`ls -lh`
-
+      returns additional file content like permissions and type of file you are working with and byte size of files
+  
 ## 03_05 - Create and remove directories
 
-`mkdir newfolder`
-
-`ls -l`
-
-`mkdir departments/customerservice`
+`mkdir newfolder` makes a new folder in working directory
 
 `mkdir departments/customerservice/documents departments/customerservice/cases departments/customerservice/awards`
+        makes new folder in dep/cust/doc, dep/cust/cas/, and dep/cus/awards 
+        
+`mkdir -p departments/legal/contracts` -p option stants for parent, usually a error will arise if parent directory of new directory being made doesnt exist. Here, that parent directory is created.  
 
-`mkdir -p departments/legal/contracts`
+`rmdir departments/legal/contracts/` remove departments
 
-`rmdir departments/legal/contracts/`
-
-`rmdir departments/legal/`
-
-`rmdir departments/customerservice`
+`rmdir departments/customerservice` will give me a error because customerservice is not empty in this case. Only empty directories can be deleted
 
 ## 03_06 - Copy, move, and delete files and directories
 
-`cp poems.txt poems2.txt`
+`cp poems.txt poems2.txt` --> copy contents of poems to poems2
 
-`ls`
+`cp simple_data.txt departments/hr/employee\ info/` copies simple_data contents to a new file called simple_data in employeeinfo
 
-`cp simple_data.txt departments/hr/employee\ info/`
+`mv poems2.txt departments/marketing`  --> Move between directories 
 
-`ls departments/hr/employee\ info/`
+`mv departments/marketing/poems2.txt departments/marketing/literature.txt` rename file literature.txt by moving the contents of a file poem2.txt to another literature.txt
 
-`mv poems2.txt departments/marketing`
+`mv departments/marketing/literature.txt .`  moves literature.txt to current working directory AWAY from specified PATH
 
-`ls departments/marketing/`
+---
+wildcards are used to match a bunch of files together with known patterns. Here are wild cards
+---
 
-`ls`
+ - * (Asterisk): Matches zero or more characters.
+- Example: ls *.txt lists all files ending in .txt.
+- ? (Question mark): Matches exactly one character.
+- Example: ls file?.txt would match file1.txt, file2.txt, but not file10.txt.
+- [] (Square brackets): Matches any single character within the brackets.
+- Example: ls file[123].txt matches file1.txt, file2.txt, and file3.txt.
 
-`mv departments/marketing/poems2.txt departments/marketing/literature.txt`
+- [^] (Negation in square brackets): Matches any character NOT listed inside the brackets.
 
-`ls departments/marketing/`
+---
 
-`mv departments/marketing/literature.txt .`
+`mv *.txt departments/marketing/` --> Move ALL .txt files in working directory to departments/marketing
 
-`ls`
+`mv departments/marketing/* .` --> move all files in departements/marketing to working directory
 
-`ls`
+`rm literature.txt` --> delete literature file
 
-`mv *.txt departments/marketing/`
 
-`ls departments/marketing/`
-
-`mv departments/marketing/* .`
-
-`ls`
-
-`rm literature.txt`
-
-`ls`
-
-`cp poems.txt poems3.txt`
-
-`cp poems.txt poems4.txt`
-
-`ls`
 
 `rm poems?.txt`
+     --Context: poems2 and poems3 exist-- 
+         --> removes  poems2, and poems3
 
-`ls`
+`rm departments/customerservice/` cannot work because customersevice is a directory and is not empty
 
-`rm departments/customerservice/`
-
-`rm -r departments/customerservice/`
+`rm -r departments/customerservice/` deletes all contents of customer service, then customer service itself
 
 ## 03_07 - Find files from the command line
 
-`find . -name "poe*"`
+`find . -name "do*"` --> find all file and directory titles starting with the word 'do' in working directory and sub directories
 
-`find . -name "do*"`
+`find . -name "*d*"` --> find all file and directory titles with the letter 'd' present in the their titles in working directory and sub directories
 
-`find . -name "d*"`
+`find ~/Documents -name "*d*"` --> finds all file and directory tittles with 'd' present in documents and sb directories
 
-`find . -name "*d*"`
 
-`find ~/Documents -name "*d*"`
 
 ## 03_08 - Understand user roles and sudo
+super users can make system wide changes, normal users cannot. super user perms can be granted temporatily using sudo commands
 
-`ls /root`
+`ls /root` --> trying to access the root directory, which is a system directory not specific to any user. Therefore, since we are normal users, access will be denied
 
-`sudo ls /root`
+`sudo ls /root`  --> First time using sudo, will be asked to enter password for user currently on system
+    return snap
+`sudo -k` --> kills superuser privilages, will need to enter password to use sudo again
 
-`sudo ls /root`
+`sudo -s` --> login to the root shell. Default logged into user shell
 
-`sudo -k`
-
-`sudo ls /root`
-
-`sudo -s`
-
-`exit`
+`exit` --> kill root shell access. Now working in user shell
 
 ## 03_10 - Modify file permissions
+
+File permissions will look similar to this.
+rwxrwxrwx filename when you ls -l filename
+r = read
+w = write
+x = execute
+
+first 3 characters define user permissions
+characters 3-6 define group permissions (defined collection of users)
+characters 7-9 define other users permissions
+
+chmod changes permissions of mode string
+chown and chgrp changes file owner(s)
 
 `ls`
 
